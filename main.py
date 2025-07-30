@@ -1,34 +1,24 @@
+import requests
+import os
 from fastapi import FastAPI, File, UploadFile, Form
 from fastapi.responses import JSONResponse
-import requests
 
 app = FastAPI()
 
-IMGBB_API_KEY = "2cf4a8edbac83b437f965c5d0ac05c63"
+IMGBB_API_KEY = os.getenv("2cf4a8edbac83b437f965c5d0ac05c63")  # from your environment on Render
 
-@app.get("/")
-def root():
-    return {"message": "👗 Stitch FashionBot is live!"}
-
-@app.post("/upload-image")
+@app.post("/upload/")
 async def upload_image(file: UploadFile = File(...)):
-    # Read file and prepare payload
-    image_data = await file.read()
-    response = requests.post(
-        "https://api.imgbb.com/1/upload",
-        params={"key": IMGBB_API_KEY},
-        files={"image": image_data}
-    )
-
+    contents = await file.read()
+    url = "https://api.imgbb.com/1/upload"
+    payload = {
+        "key": IMGBB_API_KEY,
+        "image": contents.encode("base64") if hasattr(contents, 'encode') else contents
+    }
+    response = requests.post(url, files={"image": contents}, data={"key": IMGBB_API_KEY})
+    
     if response.status_code == 200:
-        data = response.json()
-        return {
-            "success": True,
-            "url": data["data"]["url"],
-            "display_url": data["data"]["display_url"]
-        }
+        image_url = response.json()['data']['url']
+        return {"image_url": image_url}
     else:
-        return {
-            "success": False,
-            "error": response.text
-        }
+        return JSONResponse(content={"error": response.text}, status_code=400)
