@@ -57,3 +57,28 @@ To empower upcoming fashion designers with an AI tool that:
 ---
 
 ## 📂 Folder Structure (Planned)
+stitch-fashion-bot/ ├── backend/            # Python bot logic ├── media/              # Mockups and screenshots ├── docs/               # Planning, research, flowcharts ├── deployment/         # Firebase or server configs └── README.md
+
+---
+
+## 📖 License
+
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 🤝 Contributing
+
+Coming soon. Once MVP is stable, contributors will be welcome!
+
+---
+
+## 📬 Contact
+
+**Created by:** Monovie John  
+📍 Nigeria  
+📧 Coming soon | 🌍 [More info to be added]
+
+---
+
+> “Stitch isn’t just a bot — it’s your design assistant, business partner, and production manager, all in one.”
